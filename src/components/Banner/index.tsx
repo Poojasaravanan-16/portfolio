@@ -2,7 +2,7 @@
 
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa6";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Singularity from "@/components/Singularity";
 
@@ -84,7 +84,7 @@ export default function Banner() {
     0.8
   );
 
-  const containerVariants: any = {
+  const containerVariants: Variants = {
     hidden: {
       opacity: 0,
     },
@@ -97,7 +97,7 @@ export default function Banner() {
     },
   };
 
-  const itemVariants: any = {
+  const itemVariants: Variants = {
     hidden: {
       y: 50,
       opacity: 0,

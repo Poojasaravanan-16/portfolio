@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const drumBeat = {
+const drumBeat: Variants = {
   initial: { scale: 1, opacity: 0.5 },
   beat: {
     scale: [1, 1.5, 1],
