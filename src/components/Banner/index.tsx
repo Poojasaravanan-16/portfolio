@@ -204,7 +204,7 @@ export default function Banner() {
           }}
         >
           <motion.div
-            className="relative backdrop-blur-sm rounded-3xl border border-white/5 bg-black/10 p-8 md:p-12 shadow-2xl overflow-hidden transition-colors duration-500 hover:bg-black/20 hover:backdrop-blur-md mx-3 sm:mx-0"
+            className="relative backdrop-blur-sm rounded-3xl border border-white/5 bg-black/10 p-8 md:p-12 shadow-2xl transition-colors duration-500 hover:bg-black/20 hover:backdrop-blur-md mx-3 sm:mx-0"
             whileHover={{ boxShadow: "0 0 30px 5px rgba(168, 85, 247, 0.3)" }}
             transition={{ duration: 0.3 }}
           >
@@ -234,16 +234,16 @@ export default function Banner() {
 
               <motion.h3
                 variants={itemVariants}
-                className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold mt-1 sm:mt-2 md:mt-4 leading-tight"
+                className="text-lg sm:text-2xl md:text-2xl lg:text-3xl font-bold mt-1 sm:mt-2 md:mt-4 leading-tight"
               >
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
                   <span>Passionate about</span>
-                  <div className="w-[220px] sm:w-[280px] md:w-[320px] inline-flex items-center justify-start overflow-hidden">
-                    <span className="bg-gradient-to-r from-[#8c1df3] via-[#f714d1] to-[#621aaf] text-transparent bg-clip-text bg-[length:500%] animate-gradient">
+                  <span className="inline-flex items-center">
+                    <span className="bg-gradient-to-r from-[#8c1df3] via-[#f714d1] to-[#621aaf] text-transparent bg-clip-text bg-[length:500%] animate-gradient whitespace-nowrap">
                       {typewriterText}
                     </span>
                     <Cursor cursorStyle="|" />
-                  </div>
+                  </span>
                 </div>
               </motion.h3>
 
