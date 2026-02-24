@@ -1,10 +1,27 @@
 "use client";
 
-import Skills from "../Skills";
 import { motion } from "framer-motion";
-import TechStackVisualization from "./TechStackVisualization";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import profilePhoto from "@/image/professionalphoto-removebg-preview.png";
 
 const About = () => {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageRef.current) return;
+    const rect = imageRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = (e.clientX - centerX) / 10;
+    const y = (e.clientY - centerY) / 10;
+    setMousePosition({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setMousePosition({ x: 0, y: 0 });
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,14 +46,14 @@ const About = () => {
   return (
     <section
       id="about"
-      className="container mx-auto px-0 sm:px-6 lg:px-8 py-4 sm:py-16 lg:py-20"
+      className="container mx-auto px-0 sm:px-6 lg:px-8"
     >
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="space-y-4 sm:space-y-12"
+        className="space-y-8 sm:space-y-12"
       >
         {/* Title section */}
         <motion.div
@@ -46,39 +63,89 @@ const About = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black whitespace-nowrap bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
             &lt;About Me/&gt;
           </h2>
-          <span className="h-[2px] w-full bg-gradient-to-r from-[#2e2e2e] via-purple-500/20 to-[#2e2e2e]" />
         </motion.div>
 
-        {/* Content section */}
-        <div className="flex flex-col lg:flex-row gap-3 sm:gap-8 lg:gap-12">
-          {/* Text section */}
-          <motion.div
-            variants={itemVariants}
-            className="flex-1 space-y-3 sm:space-y-6 px-2 sm:px-0"
-          >
-            <p className="text-[15px] sm:text-lg lg:text-xl text-[#ababab] leading-relaxed">
-              Full-Stack & AI Engineer with 4+ years of experience building intelligent applications across fintech, AI platforms, and e-learning systems. I specialize in integrating AI agents, deploying machine learning models, and architecting scalable MLOps pipelines that bring cutting-edge AI capabilities to production.
-            </p>
-            <p className="text-[15px] sm:text-lg lg:text-xl text-[#ababab] leading-relaxed">
-              Currently leading AI integration efforts at Chemp.ai while building production-ready systems with Python, FastAPI, and Django on the backend, complemented by React, Next.js, and React Native on the frontend. My expertise spans LangChain-powered agentic workflows, retrieval-augmented generation (RAG), vector databases, and containerized deployment with Docker and AWS.
-            </p>
-            <p className="text-[15px] sm:text-lg lg:text-xl text-[#ababab] leading-relaxed">
-              What sets me apart is my ability to bridge AI research and software engineering—from fine-tuning multimodal models and building intelligent agents to designing scalable APIs and intuitive user interfaces. My background in system programming with C/C++ at 1337 School (42 Network) has equipped me with deep performance optimization skills that inform my approach to AI infrastructure.
-            </p>
-            <p className="text-[15px] sm:text-lg lg:text-xl text-[#ababab] leading-relaxed">
-              Recent achievements include deploying AI-assisted learning platforms with sub-second retrieval latency, reducing model inference costs by 45% through optimization strategies, and building end-to-end MLOps systems for multimodal content generation at Andala.ai. At Lendstack, I optimized fintech backend performance by 40% through PostgreSQL tuning and architectural improvements.
-            </p>
-            <p className="text-[15px] sm:text-lg lg:text-xl text-[#ababab] leading-relaxed">
-              I&apos;m passionate about the intersection of AI and practical software engineering—building systems that are not only intelligent but also scalable, maintainable, and deliver exceptional user experiences. Let&apos;s collaborate on AI-powered solutions that make a real impact.
-            </p>
-          </motion.div>
+        {/* Image and Content Section */}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-2 sm:px-0">
 
-          {/* Skills section */}
-          <motion.div variants={itemVariants} className="flex-1">
-            <Skills />
-            <TechStackVisualization />
-          </motion.div>
-        </div>
+  {/* Left: Profile Image */}
+  <motion.div
+    variants={itemVariants}
+    className="flex justify-center"
+  >
+    <motion.div
+      ref={imageRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{ x: mousePosition.x, y: mousePosition.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-full p-[4px] bg-gradient-to-r from-purple-500 to-pink-500 cursor-pointer"
+      whileHover={{ scale: 1.05 }}
+    >
+      <div className="w-full h-full rounded-full overflow-hidden bg-black">
+        <Image
+          src={profilePhoto}
+          alt="Pooja VS"
+          className="w-full h-full object-cover"
+          priority
+        />
+      </div>
+
+      {/* Availability Badge */}
+      <div className="absolute bottom-2 right-2 bg-purple-500 text-xs px-3 py-1 rounded-full text-white shadow-md">
+        Open to Opportunities
+      </div>
+    </motion.div>
+  </motion.div>
+
+  {/* Right: Content */}
+  <motion.div
+    variants={itemVariants}
+    className="space-y-6"
+  >
+    <h3 className="text-2xl sm:text-3xl font-bold text-white">
+      Crafting Scalable & Intelligent Systems
+    </h3>
+
+    <p className="text-[15px] sm:text-lg text-[#ababab] leading-relaxed">
+      I am a Java Developer passionate about building scalable backend systems
+      and intelligent web applications. I enjoy solving complex problems and
+      designing clean, efficient software solutions.
+    </p>
+
+    <p className="text-[15px] sm:text-lg text-[#ababab] leading-relaxed">
+      Currently pursuing B.Tech in Computer Science and Business Systems (CGPA: 8.6),
+      I have hands-on experience with React, Core Java, JDBC, MySQL, and MongoDB,
+      along with exposure to Git, GitHub, and AWS fundamentals.
+    </p>
+
+    {/* Highlight Stats */}
+    <div className="grid grid-cols-2 gap-4 pt-4">
+      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+        <h4 className="text-xl font-bold text-purple-400">3+</h4>
+        <p className="text-sm text-gray-400">Projects Built</p>
+      </div>
+
+      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+        <h4 className="text-xl font-bold text-purple-400">2</h4>
+        <p className="text-sm text-gray-400">Internships</p>
+      </div>
+
+      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+        <h4 className="text-xl font-bold text-purple-400">8.6</h4>
+        <p className="text-sm text-gray-400">CGPA</p>
+      </div>
+
+      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+        <h4 className="text-xl font-bold text-purple-400">AWS</h4>
+        <p className="text-sm text-gray-400">Cloud Learner</p>
+      </div>
+    </div>
+
+  </motion.div>
+</div>
+
+
       </motion.div>
     </section>
   );

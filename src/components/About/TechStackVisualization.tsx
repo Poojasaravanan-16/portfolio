@@ -36,66 +36,66 @@ const TechStackVisualization = () => {
   const nodes: TechNode[] = [
     // Frontend
     {
-      id: "react",
-      label: "React",
+      id: "html",
+      label: "HTML",
       icon: <FaReact size={20} />,
-      color: "#61dafb",
-      x: 25,
-      y: 35,
-      group: "frontend",
-    },
-    {
-      id: "next",
-      label: "Next.js",
-      icon: <SiNextdotjs size={20} />,
-      color: "#ffffff",
+      color: "#E34F26",
       x: 20,
       y: 20,
       group: "frontend",
     },
     {
-      id: "ts",
-      label: "TypeScript",
-      icon: <SiTypescript size={20} />,
-      color: "#3178c6",
+      id: "css",
+      label: "CSS",
+      icon: <SiTailwindcss size={20} />,
+      color: "#1572B6",
+      x: 30,
+      y: 35,
+      group: "frontend",
+    },
+    {
+      id: "js",
+      label: "JavaScript",
+      icon: <SiJavascript size={20} />,
+      color: "#F7DF1E",
       x: 40,
       y: 15,
       group: "frontend",
     },
     {
-      id: "tailwind",
-      label: "Tailwind",
-      icon: <SiTailwindcss size={20} />,
-      color: "#06b6d4",
-      x: 10,
+      id: "react",
+      label: "React",
+      icon: <FaReact size={20} />,
+      color: "#61dafb",
+      x: 15,
       y: 50,
       group: "frontend",
     },
 
     // Backend
     {
-      id: "node",
-      label: "Node.js",
-      icon: <FaNodeJs size={20} />,
-      color: "#68a063",
-      x: 75,
-      y: 30,
+      id: "java",
+      label: "Java",
+      icon: <SiJavascript size={20} />,
+      color: "#007396",
+      x: 70,
+      y: 25,
       group: "backend",
     },
     {
-      id: "nest",
-      label: "NestJS",
-      icon: <SiNestjs size={20} />,
-      color: "#e0234e",
-      x: 85,
+      id: "c",
+      label: "C",
+      icon: <SiCplusplus size={20} />,
+      color: "#A8B9CC",
+      x: 80,
       y: 15,
       group: "backend",
     },
     {
-      id: "express",
-      label: "Express",
-      icon: <SiExpress size={20} />,
-      color: "#000000",
+      id: "cpp",
+      label: "C++",
+      icon: <SiCplusplus size={20} />,
+      color: "#00599C",
       x: 60,
       y: 20,
       group: "backend",
@@ -103,21 +103,12 @@ const TechStackVisualization = () => {
 
     // Database
     {
-      id: "postgres",
-      label: "PostgreSQL",
-      icon: <SiPostgresql size={20} />,
-      color: "#336791",
-      x: 30,
-      y: 65,
-      group: "database",
-    },
-    {
       id: "mongo",
       label: "MongoDB",
       icon: <SiMongodb size={20} />,
       color: "#4DB33D",
-      x: 50,
-      y: 75,
+      x: 30,
+      y: 70,
       group: "database",
     },
     {
@@ -125,94 +116,50 @@ const TechStackVisualization = () => {
       label: "MySQL",
       icon: <SiMysql size={20} />,
       color: "#4479A1",
-      x: 15,
-      y: 80,
+      x: 50,
+      y: 75,
       group: "database",
     },
 
     // DevOps/Cloud
     {
-      id: "aws",
-      label: "AWS",
-      icon: <FaAws size={20} />,
-      color: "#ff9900",
+      id: "git",
+      label: "Git",
+      icon: <FaGitAlt size={20} />,
+      color: "#F05032",
       x: 70,
-      y: 55,
+      y: 60,
       group: "devops",
     },
     {
-      id: "docker",
-      label: "Docker",
-      icon: <FaDocker size={20} />,
-      color: "#2496ED",
+      id: "github",
+      label: "GitHub",
+      icon: <FaGitAlt size={20} />,
+      color: "#181717",
       x: 85,
       y: 70,
       group: "devops",
     },
     {
-      id: "git",
-      label: "Git",
-      icon: <FaGitAlt size={20} />,
-      color: "#F05032",
+      id: "aws",
+      label: "AWS",
+      icon: <FaAws size={20} />,
+      color: "#ff9900",
       x: 65,
-      y: 75,
+      y: 80,
       group: "devops",
-    },
-
-    // Languages
-    {
-      id: "js",
-      label: "JavaScript",
-      icon: <SiJavascript size={20} />,
-      color: "#F7DF1E",
-      x: 50,
-      y: 40,
-      group: "language",
-    },
-    {
-      id: "cpp",
-      label: "C++",
-      icon: <SiCplusplus size={20} />,
-      color: "#00599C",
-      x: 45,
-      y: 60,
-      group: "language",
     },
   ];
 
   const connections = useMemo<TechConnection[]>(
     () => [
-      // Frontend connections
-      { from: "react", to: "ts" },
-      { from: "react", to: "next" },
-      { from: "next", to: "tailwind" },
-      { from: "ts", to: "js" },
-      { from: "react", to: "tailwind" },
-
-      // Backend connections
-      { from: "node", to: "express" },
-      { from: "node", to: "nest" },
-      { from: "js", to: "node" },
-      { from: "express", to: "js" },
-
-      // Database connections
-      { from: "postgres", to: "node" },
-      { from: "nest", to: "postgres" },
-      { from: "mongo", to: "express" },
-      { from: "postgres", to: "mysql" },
-
-      // DevOps connections
-      { from: "aws", to: "docker" },
-      { from: "docker", to: "git" },
-      { from: "node", to: "aws" },
-
-      // Language connections
-      { from: "js", to: "cpp" },
-      { from: "cpp", to: "aws" },
-
-      // Cross-category connections
-      { from: "react", to: "js" },
-      { from: "postgres", to: "aws" },
+      // Essential connections only
+      { from: "html", to: "css" },
+      { from: "js", to: "react" },
+      { from: "java", to: "cpp" },
+      { from: "mongo", to: "mysql" },
+      { from: "git", to: "github" },
+      { from: "js", to: "java" },
     ],
     []
   );
@@ -243,7 +190,7 @@ const TechStackVisualization = () => {
 
   useEffect(() => {
     // Generate random stars
-    const randomStars = Array.from({ length: 120 }, () => ({
+    const randomStars = Array.from({ length: 40 }, () => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 2 + 1,
@@ -287,17 +234,12 @@ const TechStackVisualization = () => {
   };
 
   return (
-    <div className="hidden lg:block mt-8">
-      {/* Section title */}
-      <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#b520fe] to-[#e2a6f8] text-transparent bg-clip-text mb-5 px-2 sm:px-0">
-        # Tech Network
-      </h3>
-
+    <div className="flex flex-col gap-4 w-full">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="h-[450px] rounded-xl bg-[#1a1a1a]/50 backdrop-blur-sm border border-[#2e2e2e] relative overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.3)] group"
+        className="h-[400px] w-full rounded-xl bg-black backdrop-blur-sm border border-[#2e2e2e] relative overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.3)] group"
       >
         {/* Glass overlay effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#2e2e2e]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>

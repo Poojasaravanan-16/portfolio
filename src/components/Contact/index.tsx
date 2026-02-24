@@ -97,11 +97,9 @@ function Contact() {
 
   useEffect(() => {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-    if (!publicKey) {
-      console.error("EmailJS public key is missing");
-      return;
+    if (publicKey) {
+      emailjs.init(publicKey);
     }
-    emailjs.init(publicKey);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,20 +118,24 @@ function Contact() {
 
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-    if (!serviceId || !templateId) {
+    if (!serviceId || !templateId || !publicKey) {
       toast.error("Email service configuration is missing");
       setIsSubmitting(false);
       return;
     }
 
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      to_name: "Pooja",
+      subject: "Portfolio Contact",
+      message: message,
+    };
+
     toast.promise(
-      emailjs.send(serviceId, templateId, {
-        from_name: name,
-        from_email: email,
-        to_name: process.env.NEXT_PUBLIC_TO_NAME || "User",
-        message: message,
-      }),
+      emailjs.send(serviceId, templateId, templateParams),
       {
         loading: "Sending message...",
         success: () => {
@@ -145,7 +147,8 @@ function Contact() {
           setIsSubmitting(false);
           return "Message sent successfully!";
         },
-        error: () => {
+        error: (err) => {
+          console.log("EmailJS Error:", err);
           setIsSubmitting(false);
           return "Failed to send message";
         },
@@ -156,22 +159,17 @@ function Contact() {
   const socialLinks = [
     {
       icon: <FaGithub className="text-xl sm:text-2xl" />,
-      url: "https://github.com/osallak",
+      url: "https://github.com/Poojasaravanan-16",
       label: "GitHub",
     },
     {
       icon: <FaLinkedin className="text-xl sm:text-2xl" />,
-      url: "https://linkedin.com/in/osallak",
+      url: "https://linkedin.com/in/pooja-vs16",
       label: "LinkedIn",
     },
     {
-      icon: <FaTwitter className="text-xl sm:text-2xl" />,
-      url: "https://x.com/uss4ma",
-      label: "Twitter",
-    },
-    {
       icon: <FaEnvelope className="text-xl sm:text-2xl" />,
-      url: "mailto:oussamasallak1@gmail.com",
+      url: "mailto:sarvananpooja96@gmail.com",
       label: "Email",
     },
   ];
@@ -179,7 +177,7 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="container mx-auto px-0 sm:px-6 lg:px-8 py-4 sm:py-16 lg:py-20 relative"
+      className="container mx-auto px-0 sm:px-6 lg:px-8 relative"
     >
       <motion.div
         variants={containerVariants}
@@ -195,7 +193,6 @@ function Contact() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black whitespace-nowrap bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
             &lt;Contact/&gt;
           </h2>
-          <span className="h-[2px] w-full bg-gradient-to-r from-[#2e2e2e] via-purple-500/20 to-[#2e2e2e]" />
         </motion.div>
 
         {/* Cosmic background */}
@@ -464,9 +461,9 @@ function Contact() {
 
                 <div className="space-y-4 sm:space-y-6">
                   <p className="text-[#ababab] text-sm sm:text-base leading-relaxed">
-                    I&apos;m currently exploring new opportunities in software
-                    engineering, where I can apply my expertise in full-stack
-                    development, system architecture, and DevOps practices.
+                    I&apos;m currently seeking opportunities in software
+                    development, where I can apply my expertise in full-stack
+                    development, Java programming, and cloud technologies.
                   </p>
 
                   <div className="mt-6">

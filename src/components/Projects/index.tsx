@@ -1,205 +1,79 @@
 "use client";
 
-import { Icon } from "@iconify/react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState, MouseEvent } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { projects } from "@/data/projectData";
 
-interface ProjectCardProps {
-  title: string;
-  image: string;
-  desc: string;
-  repo?: string;
-  link?: string;
-  technologies: string[];
-}
-
-const ProjectCard = ({
-  title,
-  image,
-  desc,
-  repo,
-  link,
-  technologies,
-}: ProjectCardProps) => {
-  const targetUrl = link || repo;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px", amount: 0.1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      whileHover={{ y: -5 }}
-      whileTap={{ scale: 0.98 }}
-      onClick={() => targetUrl && window.open(targetUrl, "_blank")}
-      className="bg-[#2e2e2e50] w-[calc(100%-1rem)] sm:w-[400px] lg:w-[500px] min-h-[400px] sm:min-h-[550px] rounded-2xl overflow-hidden p-2 sm:p-8 border border-[#2e2e2e]
-        transition-all duration-100 hover:border-[#343434] cursor-pointer group flex flex-col"
-    >
-      <motion.div
-        className="flex justify-center"
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className="w-full h-[180px] sm:h-[250px] mb-4 rounded-2xl overflow-hidden relative">
-          <Image
-            src={`/assets/${image}`}
-            alt={title}
-            fill
-            className="object-cover transition-all duration-300 group-hover:scale-105"
-          />
-        </div>
-      </motion.div>
-      <div className="flex flex-col flex-grow">
-        <div>
-          <div className="flex flex-row items-center justify-between">
-            <p className="text-lg sm:text-2xl font-bold break-words">{title}</p>
-            <div className="flex flex-row gap-2 sm:gap-0">
-              {repo && (
-                <motion.a
-                  whileHover={{ scale: 1.1 }}
-                  href={repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-all duration-200 hover:opacity-50"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Icon icon="bxl:github" className="text-xl sm:text-2xl" />
-                </motion.a>
-              )}
-              {link && (
-                <>
-                  {repo && (
-                    <div className="mx-2 sm:mx-4 w-[1px] h-auto bg-[#2e2e2e]" />
-                  )}
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-all duration-200 hover:opacity-50"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Icon
-                      icon="material-symbols:link-rounded"
-                      className="text-xl sm:text-2xl"
-                    />
-                  </motion.a>
-                </>
-              )}
-            </div>
-          </div>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-gray-300">
-            {desc}
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2 mt-auto pt-4">
-          {technologies.map((tech, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-sm bg-[#2e2e2e] rounded-full text-gray-300"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
+const ProjectPreview = ({ image, title, x, y }: { image: string; title: string; x: number; y: number }) => (
+  <motion.div
+    className="fixed pointer-events-none z-50"
+    style={{ left: x, top: y }}
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 0.8 }}
+    transition={{ duration: 0.2 }}
+  >
+    <div className="relative w-80 h-48 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg blur-xl" />
+      <div className="relative w-full h-full bg-black/40 backdrop-blur-md border border-purple-500/30 rounded-lg overflow-hidden shadow-2xl">
+        <Image src={image} alt={title} fill className="object-cover" />
       </div>
-    </motion.div>
-  );
-};
+    </div>
+  </motion.div>
+);
 
-const Projects = () => {
-  const [projects, setProjects] = useState<ProjectCardProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const ProjectRow = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/projects");
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-        const data = await response.json();
-        setProjects(data.projects);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load projects"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  const handleMouseMove = (e: MouseEvent) => setMousePosition({ x: e.clientX, y: e.clientY });
 
   return (
-    <section id="projects">
+    <>
       <motion.div
+        className="relative w-full py-12 px-6 border-b border-white/80 cursor-pointer group mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center gap-4 sm:gap-12 mb-8"
+        transition={{ delay: index * 0.1 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onMouseMove={handleMouseMove}
+        onClick={() => router.push(`/projects/${project.slug}`)}
       >
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black whitespace-nowrap bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
-          &lt;Projects/&gt;
-        </h2>
-        <motion.span
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="h-[2px] w-full bg-gradient-to-r from-[#2e2e2e] via-purple-500/20 to-[#2e2e2e] origin-left"
-        />
+        <div className="flex items-center justify-between gap-8">
+          <div className="flex-1">
+            <motion.h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
+              {project.title}
+            </motion.h3>
+            <p className="text-gray-400 mt-3 text-sm md:text-base">{project.description}</p>
+          </div>
+          <motion.div className="text-3xl text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity" animate={{ x: isHovered ? 10 : 0 }}>→</motion.div>
+        </div>
       </motion.div>
-
-      <div className="pt-4">
-        {loading ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
-          </div>
-        ) : error ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <p className="text-red-500">{error}</p>
-          </div>
-        ) : (
-          <>
-            <div className="flex flex-wrap gap-2 sm:gap-6 justify-center px-0 sm:px-0">
-              {projects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="flex justify-center mt-12"
-            >
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                href="https://github.com/osallak"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2 bg-[#2e2e2e50] px-6 sm:px-8 py-3 sm:py-4 rounded-xl border border-[#2e2e2e] transition-all duration-200 hover:border-[#343434]"
-              >
-                <span className="text-lg sm:text-xl font-semibold">
-                  See More Projects
-                </span>
-                <Icon
-                  icon="bxl:github"
-                  className="text-2xl transition-all duration-200 group-hover:translate-x-1"
-                />
-              </motion.a>
-            </motion.div>
-          </>
-        )}
-      </div>
-    </section>
+      {isHovered && <ProjectPreview image={project.image} title={project.title} x={mousePosition.x} y={mousePosition.y} />}
+    </>
   );
 };
+
+const Projects = () => (
+  <section id="projects" className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="space-y-12">
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+          &lt;Projects/&gt;
+        </h2>
+      </motion.div>
+      <div className="space-y-6">
+        {projects.map((project, index) => (
+          <ProjectRow key={project.slug} project={project} index={index} />
+        ))}
+      </div>
+    </motion.div>
+  </section>
+);
 
 export default Projects;

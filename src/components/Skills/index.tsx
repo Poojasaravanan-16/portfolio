@@ -28,28 +28,22 @@ const Skills = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [mounted, setMounted] = React.useState(false);
   const [skills, setSkills] = useState([
-    { icon: "python-dark", name: "Python" },
-    { icon: "typescript", name: "TypeScript" },
+    { icon: "html5", name: "HTML" },
+    { icon: "css3", name: "CSS" },
     { icon: "javascript", name: "JavaScript" },
-    { icon: "cpp", name: "C++" },
-    { icon: "fastapi", name: "FastAPI" },
-    { icon: "django", name: "Django" },
-    { icon: "pytorch-dark", name: "PyTorch" },
-    { icon: "tensorflow-dark", name: "LangChain" },
     { icon: "react-dark", name: "React" },
-    { icon: "nextjs-dark", name: "Next.js" },
-    { icon: "react-dark", name: "React Native" },
-    { icon: "nodejs-dark", name: "Node.js" },
-    { icon: "nestjs-dark", name: "NestJS" },
-    { icon: "postgresql-dark", name: "PostgreSQL" },
-    { icon: "redis-dark", name: "Redis" },
+    { icon: "java-dark", name: "Java" },
+    { icon: "c", name: "C" },
+    { icon: "cpp", name: "C++" },
     { icon: "mongodb", name: "MongoDB" },
-    { icon: "docker", name: "Docker" },
-    { icon: "kubernetes", name: "Kubernetes" },
-    { icon: "aws-dark", name: "AWS" },
+    { icon: "mysql-dark", name: "MySQL" },
     { icon: "git", name: "Git" },
     { icon: "github-dark", name: "GitHub" },
-    { icon: "linux-dark", name: "Linux" },
+    { icon: "aws-dark", name: "AWS" },
+    { icon: "python-dark", name: "Python" },
+    { icon: "flask-dark", name: "Flask" },
+    { icon: "firebase", name: "Firebase" },
+    { icon: "typescript", name: "TypeScript" },
   ]);
 
   React.useEffect(() => {
@@ -116,7 +110,7 @@ const Skills = () => {
         onDragEnd={handleDragEnd}
         collisionDetection={closestCenter}
       >
-        <div className="relative flex flex-wrap items-start gap-2 min-h-[250px] bg-[#2e2e2e20] rounded-xl p-4 sm:p-6 border border-[#2e2e2e] overflow-hidden group/container backdrop-blur-sm">
+        <div className="relative flex flex-wrap items-start justify-center gap-3 min-h-[400px] bg-[#2e2e2e20] rounded-xl p-4 sm:p-6 border border-[#2e2e2e] overflow-hidden group/container backdrop-blur-sm">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(circle,_#585858_1px,_transparent_1px),radial-gradient(circle,_#585858_1.2px,_transparent_1.2px)] bg-[length:40px_40px] opacity-20" />
 
@@ -127,12 +121,11 @@ const Skills = () => {
               group-hover/container:opacity-0 group-focus-within/container:opacity-0 group-active/container:opacity-0
               ${activeId ? "opacity-0" : "opacity-100"}`}
             >
-              Drag skills to rearrange
             </span>
           </div>
 
           {/* Skills */}
-          <div className="relative z-10 flex flex-wrap items-start gap-4 w-full justify-center sm:justify-evenly pt-12">
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-12">
             <SortableContext
               items={skills.map((skill) => `skill-${skill.name}`)}
               strategy={rectSortingStrategy}

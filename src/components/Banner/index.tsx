@@ -1,15 +1,13 @@
 "use client";
 
 import { useTypewriter, Cursor } from "react-simple-typewriter";
-import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { motion, useInView, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import Singularity from "@/components/Singularity";
 
 export default function Banner() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false });
-  const occupation = "Full-Stack & AI Engineer | MLOps Specialist";
+  const occupation = "Backend Developer | Full-Stack Enthusiast | Cloud Learner";
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMounted, setIsMounted] = useState(false);
 
@@ -25,12 +23,12 @@ export default function Banner() {
 
   const [typewriterText] = useTypewriter({
     words: [
-      "AI Integration",
-      "Machine Learning",
-      "MLOps",
-      "Full-Stack Development",
-      "Innovation",
-      "Scalable Solutions",
+      "Backend Development",
+      "Problem Solving",
+      "Full-Stack",
+      "Databases",
+      "Cloud Computing",
+      "Networking",
     ],
     loop: true,
     typeSpeed: 80,
@@ -118,70 +116,70 @@ export default function Banner() {
     return x - Math.floor(x);
   };
 
-  // Generate random particles for background effect
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  // Generate animated lines
+  const lines = Array.from({ length: 25 }, (_, i) => ({
     id: i,
-    size: seededRandom(i * 1) * 10 + 5,
-    x: seededRandom(i * 2) * 100,
-    y: seededRandom(i * 3) * 100,
-    opacity: seededRandom(i * 4) * 0.3 + 0.1,
-    delay: seededRandom(i * 5) * 5,
+    x1: seededRandom(i * 1) * 100,
+    y1: seededRandom(i * 2) * 100,
+    x2: seededRandom(i * 3) * 100,
+    y2: seededRandom(i * 4) * 100,
+    duration: 10 + seededRandom(i * 5) * 15,
+    delay: seededRandom(i * 6) * 5,
   }));
 
   return (
-    <div className="min-h-[100dvh] w-full relative pointer-events-none" id="home" ref={ref}>
-      {/* Animated background particles - hidden for now as Singularity takes over */}
-      <div className="absolute inset-0 z-0 hidden">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="absolute rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
-            style={{
-              width: particle.size,
-              height: particle.size,
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              opacity: particle.opacity,
-              filter: "blur(5px)",
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [
-                particle.opacity,
-                particle.opacity * 1.5,
-                particle.opacity,
-              ],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 6 + particle.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            initial={{
-              x: mouseParticlesTransform.x,
-              y: mouseParticlesTransform.y,
-            }}
-          />
-        ))}
+    <div className="min-h-[100dvh] w-full relative pointer-events-none bg-black" id="home" ref={ref}>
+      {/* Animated lines background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <svg className="w-full h-full">
+          {lines.map((line) => {
+            const newX1 = (line.x1 + 30 * seededRandom(line.id * 7)) % 100;
+            const newY1 = (line.y1 + 30 * seededRandom(line.id * 8)) % 100;
+            const newX2 = (line.x2 + 30 * seededRandom(line.id * 9)) % 100;
+            const newY2 = (line.y2 + 30 * seededRandom(line.id * 10)) % 100;
+            
+            return (
+              <motion.line
+                key={line.id}
+                stroke={`url(#gradient${line.id})`}
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ 
+                  x1: `${line.x1}%`,
+                  y1: `${line.y1}%`,
+                  x2: `${line.x2}%`,
+                  y2: `${line.y2}%`,
+                  opacity: 0 
+                }}
+                animate={{
+                  x1: [`${line.x1}%`, `${newX1}%`, `${line.x1}%`],
+                  y1: [`${line.y1}%`, `${newY1}%`, `${line.y1}%`],
+                  x2: [`${line.x2}%`, `${newX2}%`, `${line.x2}%`],
+                  y2: [`${line.y2}%`, `${newY2}%`, `${line.y2}%`],
+                  opacity: [0, 0.6, 0],
+                }}
+                transition={{
+                  duration: line.duration,
+                  delay: line.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            );
+          })}
+          <defs>
+            {lines.map((line) => (
+              <linearGradient key={`grad-${line.id}`} id={`gradient${line.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8c1df3" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#f714d1" stopOpacity="1" />
+                <stop offset="100%" stopColor="#621aaf" stopOpacity="0.8" />
+              </linearGradient>
+            ))}
+          </defs>
+        </svg>
       </div>
 
-      {/* 3D Singularity Element */}
-      <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          y: yBg,
-          opacity: opacityBg,
-          scale,
-        }}
-      >
-        <Singularity />
-      </motion.div>
-
-      {/* Background dots with lighter opacity */}
-      <div className="absolute inset-0 z-0 opacity-60">
-        <div className="h-full w-full bg-[radial-gradient(circle,_#585858_1px,_transparent_1px),radial-gradient(circle,_#585858_1.2px,_transparent_1.2px)] bg-[length:40px_40px]" />
-      </div>
+      {/* 3D Singularity Element - Removed */}
 
       {/* Content with glassmorphism card */}
       <motion.div
@@ -204,8 +202,9 @@ export default function Banner() {
           }}
         >
           <motion.div
-            className="relative backdrop-blur-sm rounded-3xl border border-white/5 bg-black/10 p-8 md:p-12 shadow-2xl transition-colors duration-500 hover:bg-black/20 hover:backdrop-blur-md mx-3 sm:mx-0"
-            whileHover={{ boxShadow: "0 0 30px 5px rgba(168, 85, 247, 0.3)" }}
+            className="relative backdrop-blur-sm rounded-3xl border border-white/5 bg-black/20 p-8 md:p-12 shadow-2xl transition-colors duration-500 hover:backdrop-blur-md mx-3 sm:mx-0"
+            style={{ boxShadow: "0 0 30px 5px rgba(168, 85, 247, 0.3)" }}
+            whileHover={{ boxShadow: "0 0 40px 8px rgba(168, 85, 247, 0.4)" }}
             transition={{ duration: 0.3 }}
           >
             {/* Title Group */}
@@ -227,7 +226,7 @@ export default function Banner() {
               >
                 Hi, I&apos;m{" "}
                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text relative drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]">
-                  Oussama!
+                  Pooja!
                   <span className="absolute bottom-0 left-0 w-full h-0.5 sm:h-1 bg-gradient-to-r from-purple-500 to-pink-500 opacity-60"></span>
                 </span>
               </motion.h1>
@@ -261,81 +260,8 @@ export default function Banner() {
                 transition={{ duration: 0.8, delay: 1.5 }}
                 className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-[#8c1df3] to-[#621aaf] mx-auto mt-3 sm:mt-4 rounded-full"
               />
-
-              {/* Action buttons */}
-              <motion.div
-                variants={itemVariants}
-                className="mt-4 sm:mt-6 md:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <a
-                    href="/resume.pdf"
-                    download
-                    className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#8c1df3] to-[#621aaf] rounded-full
-                    text-white text-sm md:text-base font-semibold transition-all duration-300
-                    shadow-lg hover:shadow-purple-500/30"
-                  >
-                    <FaDownload className="w-4 h-4 md:w-5 md:h-5" />
-                    Download Resume
-                  </a>
-                </motion.div>
-
-                <div className="flex items-center gap-3 sm:gap-4 mt-3 sm:mt-0">
-                  <motion.a
-                    href="https://github.com/osallak"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#2e2e2e] text-white hover:bg-gradient-to-r from-[#8c1df3] to-[#621aaf] transition-all duration-300"
-                  >
-                    <FaGithub size={16} className="sm:text-xl md:text-2xl" />
-                  </motion.a>
-                  <motion.a
-                    href="https://linkedin.com/in/osallak"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#2e2e2e] text-white hover:bg-gradient-to-r from-[#8c1df3] to-[#621aaf] transition-all duration-300"
-                  >
-                    <FaLinkedin size={16} className="sm:text-xl md:text-2xl" />
-                  </motion.a>
-                </div>
-              </motion.div>
             </div>
           </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* Redesigned scroll indicator - outside of card */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden md:flex flex-col items-center"
-      >
-        <span className="text-sm font-medium text-white/70 tracking-wider mb-3">
-          SCROLL DOWN
-        </span>
-        <motion.div
-          className="w-8 h-14 border-2 border-white/30 rounded-full flex justify-center p-1"
-          whileHover={{ borderColor: "rgba(168, 85, 247, 0.5)" }}
-        >
-          <motion.div
-            className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
-            animate={{
-              y: [0, 24, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
         </motion.div>
       </motion.div>
     </div>

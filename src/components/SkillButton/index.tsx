@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -43,7 +43,7 @@ const SkillButton = ({ icon, skill, isDragging }: SkillButtonProps) => {
           before:content-['⋮'] before:mr-1 before:text-[#b520fe] before:opacity-0 before:transition-opacity before:duration-200
           hover:before:opacity-100 ${isDragging ? "before:opacity-100" : ""}`}
       >
-        <Icon icon={`skill-icons:${icon}`} className="text-lg" />
+        <Icon icon={`skill-icons:${icon}`} width={20} height={20} />
         <span
           className={`text-[#ababab] text-sm font-medium whitespace-nowrap transition-colors ${
             isDragging ? "text-white" : "group-hover:text-white"

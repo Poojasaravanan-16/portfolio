@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Footer from "@/components/Footer";
-import ScrollProgress from "@/components/ScrollProgress";
-import SmoothScroll from "@/components/SmoothScroll";
 import CursorFollower from "@/components/CursorFollower";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
@@ -19,12 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oussama Sallak | Full-Stack & AI Engineer",
+  title: "Pooja V S | Full-Stack & AI Engineer",
   description:
     "Full-Stack & AI Engineer specializing in AI agents, LangChain, MLOps, and intelligent systems. Building scalable AI-powered applications with Python, FastAPI, and modern web technologies.",
-  authors: [{ name: "Oussama Sallak" }],
+  authors: [{ name: "Pooja V S" }],
   keywords: [
-    "Oussama Sallak",
+    "Pooja V S",
     "AI Engineer",
     "MLOps",
     "LangChain",
@@ -41,7 +38,7 @@ export const metadata: Metadata = {
     "AI Integration",
     "Model Deployment",
   ],
-  creator: "Oussama Sallak",
+  creator: "Pooja V S",
   icons: {
     icon: [
       {
@@ -87,11 +84,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <CursorFollower />
-          <ScrollProgress />
-          <SmoothScroll>
-            {children}
-            <Footer />
-          </SmoothScroll>
+          {children}
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>
       </body>
