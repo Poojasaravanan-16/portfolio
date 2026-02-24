@@ -35,7 +35,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
           animate={{ opacity: 1, x: 0 }}
           whileHover={{ scale: 1.05, x: -5 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 mb-8 px-5 py-2.5 bg-[#1a1a1a]/80 backdrop-blur-md border border-purple-500/30 rounded-xl hover:bg-purple-500/20 hover:border-purple-500/50 transition-all shadow-lg"
+          className="flex items-center gap-2 mb-8 px-5 py-2.5 bg-black/80 backdrop-blur-md border border-purple-500/30 rounded-xl hover:bg-purple-500/20 hover:border-purple-500/50 transition-all shadow-lg"
         >
           <FaArrowLeft className="text-purple-400" /> 
           <span className="font-medium">Back to Projects</span>
@@ -69,7 +69,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-[#1a1a1a]/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 sm:p-8 shadow-xl"
+                  className="bg-black/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 sm:p-8 shadow-xl"
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 text-transparent bg-clip-text">
                     {project.title}
@@ -83,7 +83,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="bg-[#1a1a1a]/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 sm:p-8 shadow-xl"
+                  className="bg-black/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 sm:p-8 shadow-xl"
                 >
                   <div className="flex items-center gap-3 mb-6">
                     <FaStar className="text-2xl text-purple-400" />
@@ -111,7 +111,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="bg-[#1a1a1a]/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 shadow-xl"
+                  className="bg-black/60 backdrop-blur-md rounded-2xl border border-purple-500/30 p-6 shadow-xl"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <FaCode className="text-xl text-purple-400" />
@@ -146,7 +146,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center gap-3 w-full px-6 py-3.5 bg-[#1a1a1a]/80 backdrop-blur-md border border-purple-500/30 rounded-xl hover:bg-purple-500/20 hover:border-purple-500/50 transition-all shadow-lg font-medium"
+                      className="flex items-center justify-center gap-3 w-full px-6 py-3.5 bg-black/80 backdrop-blur-md border border-purple-500/30 rounded-xl hover:bg-purple-500/20 hover:border-purple-500/50 transition-all shadow-lg font-medium"
                     >
                       <FaGithub className="text-xl" /> View on GitHub
                     </motion.a>

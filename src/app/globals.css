@@ -29,7 +29,7 @@ body {
   --accent-secondary-via: #f714d1;
   --accent-secondary-to: #621aaf;
   --border: #2e2e2e;
-  --glass-primary: rgba(255, 255, 255, 0.05);
+  --glass-primary:  #000000;
   --glass-secondary: rgba(26, 26, 26, 0.4);
   --glass-tertiary: rgba(46, 46, 46, 0.5);
 }

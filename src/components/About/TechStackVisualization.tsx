@@ -388,7 +388,7 @@ const TechStackVisualization = () => {
         </div>
 
         {/* Legend with glass morphism */}
-        <div className="absolute bottom-3 right-3 flex gap-2 backdrop-blur-md bg-[#1a1a1a]/70 px-3 py-2 rounded-md text-[11px] text-[#ababab] border border-[#2e2e2e]/80 shadow-lg">
+        <div className="absolute bottom-3 right-3 flex gap-2 backdrop-blur-md bg-black/70 px-3 py-2 rounded-md text-[11px] text-[#ababab] border border-[#2e2e2e]/80 shadow-lg">
           <span>Hover to explore connections</span>
         </div>
       </motion.div>

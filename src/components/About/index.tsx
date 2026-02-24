@@ -122,22 +122,22 @@ const About = () => {
 
     {/* Highlight Stats */}
     <div className="grid grid-cols-2 gap-4 pt-4">
-      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+      <div className="bg-black/80 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
         <h4 className="text-xl font-bold text-purple-400">3+</h4>
         <p className="text-sm text-gray-400">Projects Built</p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+      <div className="bg-black/80 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
         <h4 className="text-xl font-bold text-purple-400">2</h4>
         <p className="text-sm text-gray-400">Internships</p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+      <div className="bg-black/80 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
         <h4 className="text-xl font-bold text-purple-400">8.6</h4>
         <p className="text-sm text-gray-400">CGPA</p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
+      <div className="bg-black/80 backdrop-blur-md p-4 rounded-lg border border-purple-500/20 hover:scale-105 transition">
         <h4 className="text-xl font-bold text-purple-400">AWS</h4>
         <p className="text-sm text-gray-400">Cloud Learner</p>
       </div>
