@@ -50,7 +50,7 @@ const Header = () => {
       
       return () => container.removeEventListener("scroll", handleHorizontalScroll);
     }
-  }, []);
+  }, [navItems]);
 
   return (
     <motion.header

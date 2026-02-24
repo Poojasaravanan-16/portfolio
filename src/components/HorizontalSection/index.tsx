@@ -2,7 +2,7 @@
 "use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface HorizontalSectionProps {
   id: string;
@@ -51,7 +51,10 @@ export const HorizontalSection = ({
       }
       
       return () => {
-        contentRef.current?.removeEventListener('scroll', handleScroll);
+        const currentRef = contentRef.current;
+        if (currentRef) {
+          currentRef.removeEventListener('scroll', handleScroll);
+        }
         resizeObserver.disconnect();
       };
     }

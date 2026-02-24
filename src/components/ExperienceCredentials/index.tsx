@@ -164,6 +164,7 @@ const CertificationsContent = () => {
           whileHover={{ scale: 1.02 }}
           className="bg-[#2e2e2e50] backdrop-blur-md border border-[#2e2e2e] rounded-xl overflow-hidden hover:border-purple-500/40 transition-all duration-300 max-w-md mx-auto"
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={cert.image}
             alt="Certificate"
