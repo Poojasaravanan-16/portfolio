@@ -23,42 +23,22 @@ export const HorizontalSection = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const [showIndicator, setShowIndicator] = useState(false);
 
-  useEffect(() => {
+  // In your HorizontalSection.tsx, update the useEffect:
+
+useEffect(() => {
+  // Small delay to ensure DOM is ready
+  const timer = setTimeout(() => {
     if (isHome && sectionRef.current) {
-      // For home page, the section itself is scrollable
       sectionRef.current.setAttribute('data-scrollable', 'true');
+      console.log('Home section set as scrollable');
     } else if (contentRef.current) {
-      // For other pages, the inner container is scrollable
       contentRef.current.setAttribute('data-scrollable', 'true');
-      
-      const handleScroll = () => {
-        if (contentRef.current) {
-          const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-          setShowIndicator(scrollTop + clientHeight < scrollHeight - 10);
-        }
-      };
-      
-      handleScroll();
-      contentRef.current.addEventListener('scroll', handleScroll);
-      
-      // Add ResizeObserver to handle dynamic content changes
-      const resizeObserver = new ResizeObserver(() => {
-        handleScroll();
-      });
-      
-      if (contentRef.current) {
-        resizeObserver.observe(contentRef.current);
-      }
-      
-      return () => {
-        const currentRef = contentRef.current;
-        if (currentRef) {
-          currentRef.removeEventListener('scroll', handleScroll);
-        }
-        resizeObserver.disconnect();
-      };
+      console.log('Content section set as scrollable');
     }
-  }, [isHome]);
+  }, 100);
+
+  return () => clearTimeout(timer);
+}, [isHome]);
 
   // Home page layout - section itself scrolls
   if (isHome) {

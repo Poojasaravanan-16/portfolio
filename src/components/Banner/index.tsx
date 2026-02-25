@@ -122,54 +122,56 @@ export default function Banner() {
   return (
     <div className="min-h-[100dvh] w-full relative pointer-events-none bg-black" id="home" ref={ref}>
       {/* Animated lines background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <svg className="w-full h-full">
-          {lines.map((line) => {
-            const newX1 = (line.x1 + 30 * seededRandom(line.id * 7)) % 100;
-            const newY1 = (line.y1 + 30 * seededRandom(line.id * 8)) % 100;
-            const newX2 = (line.x2 + 30 * seededRandom(line.id * 9)) % 100;
-            const newY2 = (line.y2 + 30 * seededRandom(line.id * 10)) % 100;
-            
-            return (
-              <motion.line
-                key={line.id}
-                stroke={`url(#gradient${line.id})`}
-                strokeWidth="2"
-                strokeLinecap="round"
-                initial={{ 
-                  x1: `${line.x1}%`,
-                  y1: `${line.y1}%`,
-                  x2: `${line.x2}%`,
-                  y2: `${line.y2}%`,
-                  opacity: 0 
-                }}
-                animate={{
-                  x1: [`${line.x1}%`, `${newX1}%`, `${line.x1}%`],
-                  y1: [`${line.y1}%`, `${newY1}%`, `${line.y1}%`],
-                  x2: [`${line.x2}%`, `${newX2}%`, `${line.x2}%`],
-                  y2: [`${line.y2}%`, `${newY2}%`, `${line.y2}%`],
-                  opacity: [0, 0.4, 0],
-                }}
-                transition={{
-                  duration: line.duration,
-                  delay: line.delay,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            );
-          })}
-          <defs>
-            {lines.map((line) => (
-              <linearGradient key={`grad-${line.id}`} id={`gradient${line.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#8c1df3" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#f714d1" stopOpacity="1" />
-                <stop offset="100%" stopColor="#621aaf" stopOpacity="0.8" />
-              </linearGradient>
-            ))}
-          </defs>
-        </svg>
-      </div>
+      {isMounted && (
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <svg className="w-full h-full">
+            {lines.map((line) => {
+              const newX1 = (line.x1 + 30 * seededRandom(line.id * 7)) % 100;
+              const newY1 = (line.y1 + 30 * seededRandom(line.id * 8)) % 100;
+              const newX2 = (line.x2 + 30 * seededRandom(line.id * 9)) % 100;
+              const newY2 = (line.y2 + 30 * seededRandom(line.id * 10)) % 100;
+              
+              return (
+                <motion.line
+                  key={line.id}
+                  stroke={`url(#gradient${line.id})`}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  initial={{ 
+                    x1: `${line.x1}%`,
+                    y1: `${line.y1}%`,
+                    x2: `${line.x2}%`,
+                    y2: `${line.y2}%`,
+                    opacity: 0 
+                  }}
+                  animate={{
+                    x1: [`${line.x1}%`, `${newX1}%`, `${line.x1}%`],
+                    y1: [`${line.y1}%`, `${newY1}%`, `${line.y1}%`],
+                    x2: [`${line.x2}%`, `${newX2}%`, `${line.x2}%`],
+                    y2: [`${line.y2}%`, `${newY2}%`, `${line.y2}%`],
+                    opacity: [0, 0.4, 0],
+                  }}
+                  transition={{
+                    duration: line.duration,
+                    delay: line.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              );
+            })}
+            <defs>
+              {lines.map((line) => (
+                <linearGradient key={`grad-${line.id}`} id={`gradient${line.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#8c1df3" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#f714d1" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#621aaf" stopOpacity="0.8" />
+                </linearGradient>
+              ))}
+            </defs>
+          </svg>
+        </div>
+      )}
 
       {/* 3D Singularity Element - Removed */}
 

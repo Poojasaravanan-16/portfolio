@@ -1,7 +1,7 @@
-// HorizontalScrollContainer.tsx
+// HorizontalScrollContainer.debug.tsx
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect, useRef, ReactNode, useState } from "react";
 
 interface HorizontalScrollContainerProps {
   children: ReactNode;
@@ -11,72 +11,35 @@ export const HorizontalScrollContainer = ({
   children,
 }: HorizontalScrollContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isScrollingRef = useRef(false);
+  const [debug, setDebug] = useState({ hasScrollable: false, atTop: false, atBottom: false });
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      const target = e.target as HTMLElement;
+      e.preventDefault(); // Force prevent default for testing
       
-      // Find the scrollable element (marked with data-scrollable="true")
+      const target = e.target as HTMLElement;
       const scrollableElement = target.closest('[data-scrollable="true"]') as HTMLElement;
       
-      // If we're inside a scrollable element that can scroll vertically
-      if (scrollableElement) {
-        const isScrollingDown = e.deltaY > 0;
-        const isScrollingUp = e.deltaY < 0;
-        
-        const canScrollDown = scrollableElement.scrollTop < 
-          (scrollableElement.scrollHeight - scrollableElement.clientHeight - 5); // 5px threshold
-        const canScrollUp = scrollableElement.scrollTop > 5; // 5px threshold
-        
-        // If we can scroll vertically in the current direction, let it happen
-        if ((isScrollingDown && canScrollDown) || (isScrollingUp && canScrollUp)) {
-          return; // Allow vertical scrolling
-        }
-        
-        // If we're at the top scrolling up or at the bottom scrolling down,
-        // prevent default and handle horizontal scrolling
-        e.preventDefault();
-        
-        // Prevent multiple rapid scrolls
-        if (!isScrollingRef.current) {
-          isScrollingRef.current = true;
-          
-          // Scroll horizontally
-          container.scrollLeft += e.deltaY * 1.5;
-          
-          // Reset scrolling flag after animation
-          setTimeout(() => {
-            isScrollingRef.current = false;
-          }, 50);
-        }
-      } else {
-        // If not in a scrollable element, always scroll horizontally
-        e.preventDefault();
-        container.scrollLeft += e.deltaY * 1.5;
-      }
+      console.log('Wheel event:', {
+        target: target.tagName,
+        hasScrollable: !!scrollableElement,
+        deltaY: e.deltaY,
+        clientX: e.clientX,
+        clientY: e.clientY
+      });
+
+      // Force horizontal scroll
+      container.scrollLeft += e.deltaY * 1.5;
     };
 
-    // Handle keyboard navigation
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        container.scrollLeft += window.innerWidth;
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        container.scrollLeft -= window.innerWidth;
-      }
-    };
-
-    container.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("keydown", handleKeyDown);
+    // Use capture phase to catch events before they bubble
+    container.addEventListener('wheel', handleWheel, { passive: false, capture: true });
 
     return () => {
-      container.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("keydown", handleKeyDown);
+      container.removeEventListener('wheel', handleWheel, { capture: true });
     };
   }, []);
 
