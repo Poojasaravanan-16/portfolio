@@ -173,6 +173,32 @@ export default function Banner() {
 
       {/* 3D Singularity Element - Removed */}
 
+      {/* Explore Indicator - Right Side */}
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 2 }}
+        className="absolute right-8 top-1/2 -translate-y-1/2 z-20 flex items-center gap-3"
+      >
+        <motion.span
+          className="text-xs font-medium text-purple-300 tracking-wider"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          EXPLORE
+        </motion.span>
+        <motion.svg
+          className="w-8 h-8 text-purple-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          animate={{ x: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </motion.svg>
+      </motion.div>
+
       {/* Content with glassmorphism card */}
       <motion.div
         variants={containerVariants}
